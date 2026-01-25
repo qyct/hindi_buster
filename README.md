@@ -10,10 +10,13 @@ A single-page web application for learning Hindi vocabulary through interactive 
 - **Two Input Methods**:
   - Click to select, then click to place
   - Drag and drop English words into answer slots
-- **One Word Per Slot**: Each English word can only be used once
+- **One Word Per Slot**: Each English word can only be used once per quiz
 - **Hint System**: Click "!" button to highlight the correct answer
-- **Persistent Statistics**: Tracks Correct, Wrong, and Hints across sessions (localStorage)
+- **Frequency Badges**: Shows word frequency (e.g., 125k, 1.5M) for learning priority
+- **Session Statistics**: Tracks Correct, Wrong, and Hints (resets on page refresh)
+- **Responsive Layout**: 1 column in portrait mode, 2 columns in landscape
 - **Single Page Layout**: Everything fits on screen without scrolling
+- **Mobile Friendly**: Viewport meta tag for proper mobile scaling
 
 ## File Structure
 
@@ -37,19 +40,48 @@ hindi_buster/
 
 1. **Match Words**: Click or drag English words to match with Hindi words
 2. **Get Hints**: Click the "!" button next to any Hindi word to highlight the correct answer
-3. **Check Answers**: Click "Check" to see your score
-4. **Clear**: Click "Clear" to reset the current quiz (keeps statistics)
-5. **Generate**: Click "Generate" for a new set of words (keeps statistics)
+3. **Check Answers**: Click ✓ to see your score
+4. **Clear**: Click ✕ to reset the current quiz (statistics preserved)
+5. **Generate**: Click ↻ for a new set of words (statistics preserved)
+
+### UI Icons
+
+- **↻** (Generate) - Load a new set of random words
+- **✕** (Clear) - Clear all answers in current quiz
+- **✓** (Check) - Check your answers and update statistics
+- **!** (Hint) - Highlight the correct answer for a word
+
+### Frequency Badges
+
+Each Hindi word has a frequency badge showing its usage:
+- **M** = Millions (e.g., 2.5M, 150M)
+- **k** = Thousands (e.g., 125k, 50.3k)
+- **h** = Hundreds (e.g., 7.5h)
+- Higher frequency = more common word = appears more often in quizzes
 
 ## Statistics
 
-- **Correct**: Total correct answers across all sessions
-- **Wrong**: Total wrong answers across all sessions
-- **Hints**: Total hints used across all sessions
+Statistics are displayed at the bottom of the page:
 
-Statistics persist in localStorage and only reset when:
-- Browser cache is cleared
-- localStorage is manually cleared
+- **Correct**: Total correct answers (green)
+- **Wrong**: Total wrong answers (red)
+- **Hints**: Total hints used (orange)
+
+**Statistics Behavior:**
+- Persist across Generate and Clear button clicks
+- Reset to 0 on page refresh
+- Each unique answer is only counted once per quiz session
+- Prevents double-counting when checking the same answer multiple times
+
+## Layout
+
+### Portrait Mode (height > width)
+- Single column with 10 words stacked vertically
+- Optimized for mobile devices
+
+### Landscape Mode (width > height)
+- Two columns with 5 words each
+- Maximizes screen real estate on desktop
 
 ## Technical Details
 
@@ -68,23 +100,35 @@ hindi,english,freq
 
 ### Storage Keys
 
-- `hindi_words_v1`: Cached word database
-- `hindi_buster_stats`: User statistics (correct, wrong, hints)
+- `hindi_words_v1`: Cached word database (persists across sessions)
 
 ### Key Design Decisions
 
 1. **20 English Options for 10 Hindi Words**: Increases difficulty by adding distractor words
 2. **One-to-One Matching**: Each English word can only be used once per quiz
-3. **Persistent Stats**: Statistics accumulate across sessions to track long-term progress
+3. **Session-Only Stats**: Statistics reset on page refresh for clean slate each session
 4. **Weighted Random**: Common words appear more frequently for better learning
 5. **Single Page**: No scrolling required - everything fits in viewport
 6. **LocalStorage Caching**: CSV data loads once and caches for instant subsequent loads
+7. **Responsive Design**: Adapts layout based on screen orientation
+8. **Unicode Icons**: Standard Unicode symbols for buttons (lightweight, scalable)
+9. **Frequency Badges**: Shows relative word importance with abbreviated format
+10. **Click Outside to Deselect**: Clicking outside interactive elements clears selection
+
+### Interaction Details
+
+- Used English words become grayed out and cannot be selected again
+- Clicking outside answer slots/deselects selected English words
+- Hints show pulsing animation on the correct answer
+- Drag and drop with visual feedback during hover
+- Auto-scroll to highlighted hint words if not visible
 
 ### Browser Compatibility
 
 - Modern browsers with ES6+ support
 - LocalStorage support required
 - Drag and drop API support
+- CSS Grid and Flexbox support
 
 ## Customization
 
@@ -92,7 +136,7 @@ hindi,english,freq
 
 Edit `res/app.js`:
 ```javascript
-// Line 29: Change quiz word count
+// Change quiz word count and distractor count
 const quizData = generateQuiz(10, 10); // (quiz words, distractor words)
 
 // Example: 15 Hindi words with 10 distractors
@@ -105,4 +149,12 @@ Edit `generateQuiz()` function in `res/app.js` to modify how words are selected.
 
 ### Adjust Styling
 
-Edit `res/style.css` to customize colors, fonts, and layout.
+Edit `res/style.css` to customize:
+- Colors (search for color codes like `#4CAF50`, `#ff9800`)
+- Fonts (modify `font-family` in `body`)
+- Layout (adjust grid and flexbox properties)
+- Spacing (modify `gap`, `padding` values)
+
+### Change Frequency Badge Formatting
+
+Edit `formatFrequency()` function in `res/app.js` to change how frequencies are displayed.

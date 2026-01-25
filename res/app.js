@@ -12,6 +12,21 @@ let totalWrong = 0;
 let totalHints = 0;
 let checkedAnswers = new Set(); // Track which answers have been checked
 
+// Format frequency number to abbreviated form
+function formatFrequency(freq) {
+    if (freq >= 1000000) {
+        const m = freq / 1000000;
+        return (m >= 100 ? m.toFixed(0) : m.toFixed(1)) + 'M';
+    } else if (freq >= 1000) {
+        const k = freq / 1000;
+        return (k >= 100 ? k.toFixed(0) : k.toFixed(1)) + 'k';
+    } else if (freq >= 100) {
+        const h = freq / 100;
+        return h.toFixed(1) + 'h';
+    }
+    return freq.toString();
+}
+
 // Load CSV once and cache
 async function loadWords() {
     const cached = localStorage.getItem(STORAGE_KEY);
@@ -120,9 +135,11 @@ function renderQuiz() {
     currentQuiz.forEach((word, index) => {
         const row = document.createElement("div");
         row.className = "hindi-row";
+        const formattedFreq = formatFrequency(word.freq);
         row.innerHTML = `
             <span class="hindi-word">${word.hindi}</span>
             <span class="answer-slot" data-index="${index}">${userAnswers[index] || ""}</span>
+            <span class="freq-badge" title="Frequency: ${word.freq}">${formattedFreq}</span>
             <button class="hint-btn" data-index="${index}" title="Show hint">!</button>
         `;
         hindiContainer.appendChild(row);

@@ -2,6 +2,7 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hindi Buster</title>
     <link rel="stylesheet" href="res/style.css">
 </head>
@@ -9,21 +10,22 @@
 
 <div class="header">
     <h1 class="logo">Hindi Buster</h1>
-    <div class="stats">
-        <span class="stat">Correct: <strong class="correct-count" id="correct-count">0</strong></span>
-        <span class="stat">Wrong: <strong class="wrong-count" id="wrong-count">0</strong></span>
-        <span class="stat">Hints: <strong class="hint-count" id="hint-count">0</strong></span>
-    </div>
     <div class="buttons">
-        <button id="generate">Generate</button>
-        <button id="clear">Clear</button>
-        <button id="check">Check</button>
+        <button id="generate" title="Generate">↻</button>
+        <button id="clear" title="Clear">✕</button>
+        <button id="check" title="Check">✓</button>
     </div>
 </div>
 
 <div id="quiz">
     <div id="hindi-words"></div>
     <div id="english-options"></div>
+</div>
+
+<div class="stats-footer">
+    <span class="stat">Correct: <strong class="correct-count" id="correct-count">0</strong></span>
+    <span class="stat">Wrong: <strong class="wrong-count" id="wrong-count">0</strong></span>
+    <span class="stat">Hints: <strong class="hint-count" id="hint-count">0</strong></span>
 </div>
 
 <script src="res/app.js"></script>

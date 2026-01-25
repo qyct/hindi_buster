@@ -22,7 +22,7 @@ body {
 }
 
 .logo {
-    font-size: 10px;
+    font-size: 12px;
     font-weight: bold;
     color: #333;
 }
@@ -37,7 +37,7 @@ body {
     color: white;
     border: none;
     padding: 5px 8px;
-    font-size: 10px;
+    font-size: 12px;
     cursor: pointer;
     border-radius: 4px;
 }
@@ -76,7 +76,7 @@ body {
     background-color: #f8f9fa;
     border: 2px solid #dee2e6;
     padding: 3px 6px;
-    font-size: 10px;
+    font-size: 12px;
     cursor: pointer;
     border-radius: 4px;
 }
@@ -118,7 +118,7 @@ body {
 }
 
 .hindi-word {
-    font-size: 10px;
+    font-size: 12px;
     font-weight: bold;
     min-width: 70px;
     color: #333;
@@ -132,7 +132,7 @@ body {
     border-radius: 4px;
     background-color: white;
     cursor: pointer;
-    font-size: 10px;
+    font-size: 12px;
 }
 
 .answer-slot:hover {
@@ -161,7 +161,7 @@ body {
 .freq-badge {
     background-color: #6c757d;
     color: white;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: bold;
     padding: 1px 3px;
     border-radius: 10px;
@@ -177,7 +177,7 @@ body {
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
-    font-size: 10px;
+    font-size: 12px;
     flex-shrink: 0;
 }
 
@@ -196,12 +196,12 @@ body {
 }
 
 .stats-footer .stat {
-    font-size: 10px;
+    font-size: 12px;
     color: #555;
 }
 
 .stats-footer .stat strong {
-    font-size: 10px;
+    font-size: 12px;
     color: #333;
 }
 

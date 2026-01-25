@@ -91,7 +91,6 @@ body {
 
 #english-options {
     display: flex;
-    flex-wrap: nowrap;
     gap: 6px;
     justify-content: flex-start;
     align-items: center;
@@ -212,17 +211,6 @@ body {
     background-color: #f8d7da;
     border-color: #dc3545;
     color: #721c24;
-}
-
-#english-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 12px;
-    background-color: white;
-    border-radius: 6px;
-    justify-content: center;
-    align-content: flex-start;
 }
 
 .english-option {

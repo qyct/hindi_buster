@@ -24,7 +24,7 @@ body {
 }
 
 .logo {
-    font-size: 22px;
+    font-size: 16px;
     font-weight: bold;
     color: #333;
     margin: 0;
@@ -39,11 +39,11 @@ body {
     background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 10px 16px;
-    font-size: 18px;
+    padding: 8px 12px;
+    font-size: 15px;
     cursor: pointer;
     border-radius: 4px;
-    min-width: 44px;
+    min-width: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -77,88 +77,12 @@ body {
 
 #hindi-words {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px 20px;
+    grid-template-columns: 1fr;
+    gap: 8px;
     margin-bottom: 15px;
     flex-shrink: 0;
 }
 
-/* Portrait mode: height > width - show 1 column */
-@media (orientation: portrait) {
-    #hindi-words {
-        grid-template-columns: 1fr;
-        gap: 8px;
-    }
-
-    .logo {
-        font-size: 18px;
-    }
-
-    .hindi-word {
-        font-size: 18px;
-    }
-
-    .answer-slot {
-        font-size: 13px;
-    }
-
-    .english-option {
-        font-size: 13px;
-        padding: 6px 12px;
-    }
-
-    #generate, #clear, #check {
-        font-size: 16px;
-        padding: 8px 14px;
-    }
-}
-
-/* Mobile devices - reduce font sizes further */
-@media (max-width: 768px) {
-    .logo {
-        font-size: 16px;
-    }
-
-    .hindi-word {
-        font-size: 16px;
-        min-width: 80px;
-    }
-
-    .answer-slot {
-        font-size: 12px;
-        min-height: 28px;
-    }
-
-    .english-option {
-        font-size: 12px;
-        padding: 6px 10px;
-    }
-
-    .freq-badge {
-        font-size: 9px;
-        padding: 2px 4px;
-    }
-
-    .hint-btn {
-        width: 24px;
-        height: 24px;
-        font-size: 14px;
-    }
-
-    #generate, #clear, #check {
-        font-size: 15px;
-        padding: 8px 12px;
-        min-width: 40px;
-    }
-
-    .stats-footer .stat {
-        font-size: 12px;
-    }
-
-    .stats-footer .stat strong {
-        font-size: 14px;
-    }
-}
 
 .hindi-row {
     display: flex;
@@ -170,30 +94,30 @@ body {
 }
 
 .hindi-word {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
-    min-width: 100px;
+    min-width: 80px;
     color: #333;
 }
 
 .answer-slot {
     flex: 1;
-    min-height: 32px;
+    min-height: 28px;
     padding: 6px 10px;
     border: 2px dashed #ccc;
     border-radius: 4px;
     background-color: #fafafa;
     cursor: pointer;
     transition: all 0.2s;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .freq-badge {
     background-color: #6c757d;
     color: white;
-    font-size: 10px;
+    font-size: 9px;
     font-weight: bold;
-    padding: 2px 6px;
+    padding: 2px 4px;
     border-radius: 10px;
     min-width: 20px;
     text-align: center;
@@ -201,15 +125,15 @@ body {
 }
 
 .hint-btn {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     border: none;
     background-color: #ff9800;
     color: white;
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 14px;
     flex-shrink: 0;
     transition: all 0.2s;
 }
@@ -266,8 +190,8 @@ body {
 .english-option {
     background-color: #f8f9fa;
     border: 2px solid #dee2e6;
-    padding: 8px 14px;
-    font-size: 14px;
+    padding: 6px 10px;
+    font-size: 12px;
     cursor: pointer;
     border-radius: 4px;
     transition: all 0.2s;
@@ -322,12 +246,12 @@ body {
 }
 
 .stats-footer .stat {
-    font-size: 14px;
+    font-size: 12px;
     color: #555;
 }
 
 .stats-footer .stat strong {
-    font-size: 16px;
+    font-size: 14px;
     color: #333;
 }
 

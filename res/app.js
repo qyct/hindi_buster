@@ -44,7 +44,7 @@ async function loadWords() {
     }
 
     // Auto-generate quiz on load
-    const quizData = generateQuiz(10, 10);
+    const quizData = generateQuiz(10, 0);
     currentQuiz = quizData.quizWords;
     currentEnglishOptions = quizData.allWords;
     renderQuiz();
@@ -115,7 +115,6 @@ function shuffle(array) {
 
 // Render quiz
 function renderQuiz() {
-    const quizContainer = document.getElementById("quiz");
     const hindiContainer = document.getElementById("hindi-words");
     const englishContainer = document.getElementById("english-options");
 
@@ -400,7 +399,7 @@ function checkAnswers() {
 
 // UI
 document.getElementById("generate").addEventListener("click", () => {
-    const quizData = generateQuiz(10, 10);
+    const quizData = generateQuiz(10, 0);
     currentQuiz = quizData.quizWords;
     currentEnglishOptions = quizData.allWords;
     checkedAnswers.clear(); // Only clear checkedAnswers when generating a new quiz

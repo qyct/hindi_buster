@@ -17,7 +17,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 20px;
+    padding: 8px 15px;
     background-color: white;
     border-bottom: 1px solid #ddd;
     flex-shrink: 0;
@@ -32,18 +32,18 @@ body {
 
 .buttons {
     display: flex;
-    gap: 10px;
+    gap: 8px;
 }
 
 #generate, #clear, #check {
     background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 8px 12px;
-    font-size: 15px;
+    padding: 6px 10px;
+    font-size: 14px;
     cursor: pointer;
     border-radius: 4px;
-    min-width: 40px;
+    min-width: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -66,68 +66,61 @@ body {
     transform: translateY(0);
 }
 
-#quiz {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 15px;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
 #hindi-words {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 8px;
-    margin-bottom: 15px;
-    flex-shrink: 0;
-    overflow-y: auto;
+    gap: 6px;
+    padding: 10px;
     flex: 1;
+    overflow-y: auto;
+    max-width: 400px;
+    width: 100%;
+    margin: 0 auto;
 }
 
 #english-options {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    padding: 12px;
+    gap: 6px;
+    padding: 8px;
     background-color: white;
     border-radius: 6px;
     justify-content: center;
     align-content: flex-start;
     flex-shrink: 0;
-    position: sticky;
-    bottom: 0;
     border-top: 2px solid #ddd;
-    margin-top: 10px;
+    max-width: 400px;
+    width: 100%;
+    margin: 0 auto;
 }
 
 
 .hindi-row {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 8px;
+    gap: 8px;
+    padding: 6px 8px;
     background-color: white;
-    border-radius: 6px;
+    border-radius: 4px;
 }
 
 .hindi-word {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
-    min-width: 80px;
+    min-width: 70px;
     color: #333;
 }
 
 .answer-slot {
     flex: 1;
-    min-height: 28px;
-    padding: 6px 10px;
+    min-height: 26px;
+    padding: 4px 8px;
     border: 2px dashed #ccc;
     border-radius: 4px;
     background-color: #fafafa;
     cursor: pointer;
     transition: all 0.2s;
-    font-size: 12px;
+    font-size: 11px;
 }
 
 .freq-badge {
@@ -208,8 +201,8 @@ body {
 .english-option {
     background-color: #f8f9fa;
     border: 2px solid #dee2e6;
-    padding: 6px 10px;
-    font-size: 12px;
+    padding: 4px 8px;
+    font-size: 10px;
     cursor: pointer;
     border-radius: 4px;
     transition: all 0.2s;
@@ -257,19 +250,19 @@ body {
     display: flex;
     justify-content: center;
     gap: 30px;
-    padding: 12px 20px;
+    padding: 8px 15px;
     background-color: white;
     border-top: 1px solid #ddd;
     flex-shrink: 0;
 }
 
 .stats-footer .stat {
-    font-size: 12px;
+    font-size: 11px;
     color: #555;
 }
 
 .stats-footer .stat strong {
-    font-size: 14px;
+    font-size: 13px;
     color: #333;
 }
 

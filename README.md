@@ -7,6 +7,7 @@ A single-page web application for learning Hindi vocabulary through interactive 
 - **Weighted Random Selection**: High-frequency words appear more often in quizzes
 - **10 Hindi Words**: Each quiz displays 10 Hindi words to translate
 - **10 English Options**: 10 correct answers to match with 10 Hindi words
+- **Full Width Layout**: App spans entire screen width for optimal space usage
 - **Two Input Methods**:
   - Click to select, then click to place
   - Drag and drop English words into answer slots
@@ -77,14 +78,15 @@ Statistics are displayed at the bottom of the page:
 ## Layout
 
 - **Mobile-First Design**: Single column layout with 10 words stacked vertically
+- **Full Width**: App spans entire screen width with no max-width constraints
 - **Consistent Experience**: Same layout on mobile, tablet, and desktop
-- **Centered Content**: Hindi words and English options centered with max-width of 400px
 - **Flat Structure**: Header, Hindi words, English options, and Stats all at same level
 - **Scrollable Hindi Words**: Hindi words section scrolls independently
-- **Fixed English Options**: English options fixed below Hindi words (above stats)
+- **Fixed English Options**: English options fixed below Hindi words with horizontal scroll
 - **Fixed Header**: Logo and control buttons always visible at top
 - **Fixed Stats**: Statistics always visible at bottom
 - **Compact Design**: Reduced padding and font sizes for efficient use of space
+- **Simplified CSS**: Clean, straightforward styling without complexity
 
 ## Technical Details
 
@@ -112,23 +114,24 @@ hindi,english,freq
 3. **Session-Only Stats**: Statistics reset on page refresh for clean slate each session
 4. **Weighted Random**: Common words appear more frequently for better learning
 5. **Mobile-First Design**: Single column layout works identically on all devices without media queries
-6. **Flat HTML Structure**: All main sections (header, hindi, english, stats) at same level
-7. **Centered Content Layout**: 400px max-width centered on screen for optimal readability
+6. **Full Width Layout**: No max-width constraints, app uses entire screen width
+7. **Flat HTML Structure**: All main sections (header, hindi, english, stats) at same level
 8. **Independent Scrolling**: Hindi words scroll while English options and stats remain fixed
-9. **LocalStorage Caching**: CSV data loads once and caches for instant subsequent loads
-10. **Unicode Icons**: Standard Unicode symbols for buttons (lightweight, scalable)
-11. **Frequency Badges**: Shows relative word importance with abbreviated format
-12. **Click Outside to Deselect**: Clicking outside interactive elements clears selection
-13. **Compact UI**: Minimal padding and font sizes for efficient space usage
+9. **Simplified CSS**: Clean, minimal styling without complex animations or custom scrollbars
+10. **LocalStorage Caching**: CSV data loads once and caches for instant subsequent loads
+11. **Unicode Icons**: Standard Unicode symbols for buttons (lightweight, scalable)
+12. **Frequency Badges**: Shows relative word importance with abbreviated format
+13. **Click Outside to Deselect**: Clicking outside interactive elements clears selection
+14. **Compact UI**: Minimal padding and font sizes for efficient space usage
 
 ### Interaction Details
 
 - Used English words become grayed out and cannot be selected again
-- Clicking outside answer slots/deselects selected English words
+- Clicking outside answer slots deselects selected English words
 - Hints show pulsing animation on the correct answer
-- Drag and drop with visual feedback during hover
+- Drag and drop support for English words into answer slots
 - Hindi words section scrolls independently while English options remain visible
-- Auto-scroll to highlighted hint words if not visible
+- English options scroll horizontally using browser's default scrollbar
 
 ### Browser Compatibility
 
@@ -159,8 +162,8 @@ Edit `generateQuiz()` function in `res/app.js` to modify how words are selected.
 Edit `res/style.css` to customize:
 - Colors (search for color codes like `#4CAF50`, `#ff9800`)
 - Fonts (modify `font-family` in `body`)
-- Layout (adjust grid and flexbox properties)
 - Spacing (modify `gap`, `padding` values)
+- Layout is full-width by default, can add max-width if needed
 
 ### Change Frequency Badge Formatting
 

@@ -76,7 +76,7 @@ body {
     background-color: #f8f9fa;
     border: 2px solid #dee2e6;
     padding: 3px 6px;
-    font-size: 14px;
+    font-size: 16px;
     cursor: pointer;
     border-radius: 4px;
 }
@@ -118,7 +118,7 @@ body {
 }
 
 .hindi-word {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
     min-width: 70px;
     color: #333;
@@ -132,7 +132,7 @@ body {
     border-radius: 4px;
     background-color: white;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 16px;
 }
 
 .answer-slot:hover {

@@ -17,6 +17,7 @@ A single-page web application for learning Hindi vocabulary through interactive 
 - **Frequency Badges**: Shows word frequency (e.g., 125k, 1.5M) for learning priority
 - **Session Statistics**: Tracks Correct, Wrong, and Hints (resets on page refresh)
 - **Single Column Layout**: 10 Hindi words stacked vertically
+- **Uniform Font Sizes**: 12px default, 16px for quiz words, 9px for badges
 - **Compact Design**: Optimized font sizes and spacing for readability on all screens
 - **Mobile-First Design**: Single column layout optimized for all devices
 - **Fixed Stats Bar**: Statistics always visible at bottom, quiz scrolls independently
@@ -84,7 +85,7 @@ Statistics are displayed at the bottom of the page:
 - **Flat Structure**: Header, Hindi words, English options, and Stats all at same level
 - **Normal Page Scroll**: All sections scroll naturally as part of the document
 - **Centered English Options**: English words centered and wrap on multiple lines
-- **Compact Design**: Reduced padding and font sizes for efficient use of space
+- **Compact Design**: Minimal padding and optimized font sizes for efficient space usage
 - **Simplified CSS**: Clean, straightforward styling without complexity
 - **Minimal Nesting**: HTML structure optimized with no unnecessary divs
 
@@ -123,7 +124,7 @@ hindi,english,freq
 12. **Unicode Icons**: Standard Unicode symbols for buttons (lightweight, scalable)
 13. **Frequency Badges**: Shows relative word importance with abbreviated format
 14. **Click Outside to Deselect**: Clicking outside interactive elements clears selection
-15. **Compact UI**: Minimal padding and font sizes for efficient space usage
+15. **Compact UI**: Minimal padding and optimized font sizes for efficient space usage
 
 ### Interaction Details
 
@@ -163,6 +164,7 @@ Edit `generateQuiz()` function in `res/app.js` to modify how words are selected.
 Edit `res/style.css` to customize:
 - Colors (search for color codes like `#4CAF50`, `#ff9800`)
 - Fonts (modify `font-family` in `body`)
+- Font sizes (default: 12px, Hindi/English words: 16px, badges: 9px)
 - Spacing (modify `gap`, `padding` values)
 - Layout is full-width by default, can add max-width if needed
 

@@ -8,6 +8,7 @@ A single-page web application for learning Hindi vocabulary through interactive 
 - **10 Hindi Words**: Each quiz displays 10 Hindi words to translate
 - **10 English Options**: 10 correct answers to match with 10 Hindi words
 - **Full Width Layout**: App spans entire screen width for optimal space usage
+- **Normal Page Scroll**: All sections scroll naturally as part of the page
 - **Two Input Methods**:
   - Click to select, then click to place
   - Drag and drop English words into answer slots
@@ -81,12 +82,11 @@ Statistics are displayed at the bottom of the page:
 - **Full Width**: App spans entire screen width with no max-width constraints
 - **Consistent Experience**: Same layout on mobile, tablet, and desktop
 - **Flat Structure**: Header, Hindi words, English options, and Stats all at same level
-- **Scrollable Hindi Words**: Hindi words section scrolls independently
-- **Fixed English Options**: English options fixed below Hindi words with horizontal scroll
-- **Fixed Header**: Logo and control buttons always visible at top
-- **Fixed Stats**: Statistics always visible at bottom
+- **Normal Page Scroll**: All sections scroll naturally as part of the document
+- **Centered English Options**: English words centered and wrap on multiple lines
 - **Compact Design**: Reduced padding and font sizes for efficient use of space
 - **Simplified CSS**: Clean, straightforward styling without complexity
+- **Minimal Nesting**: HTML structure optimized with no unnecessary divs
 
 ## Technical Details
 
@@ -115,14 +115,15 @@ hindi,english,freq
 4. **Weighted Random**: Common words appear more frequently for better learning
 5. **Mobile-First Design**: Single column layout works identically on all devices without media queries
 6. **Full Width Layout**: No max-width constraints, app uses entire screen width
-7. **Flat HTML Structure**: All main sections (header, hindi, english, stats) at same level
-8. **Independent Scrolling**: Hindi words scroll while English options and stats remain fixed
-9. **Simplified CSS**: Clean, minimal styling without complex animations or custom scrollbars
-10. **LocalStorage Caching**: CSV data loads once and caches for instant subsequent loads
-11. **Unicode Icons**: Standard Unicode symbols for buttons (lightweight, scalable)
-12. **Frequency Badges**: Shows relative word importance with abbreviated format
-13. **Click Outside to Deselect**: Clicking outside interactive elements clears selection
-14. **Compact UI**: Minimal padding and font sizes for efficient space usage
+7. **Normal Page Scrolling**: All sections flow naturally in document with standard scroll
+8. **Flat HTML Structure**: Minimal nesting, all main sections at same level
+9. **Wrapped English Options**: Words wrap naturally on multiple lines
+10. **Simplified CSS**: Clean, minimal styling without complex animations
+11. **LocalStorage Caching**: CSV data loads once and caches for instant subsequent loads
+12. **Unicode Icons**: Standard Unicode symbols for buttons (lightweight, scalable)
+13. **Frequency Badges**: Shows relative word importance with abbreviated format
+14. **Click Outside to Deselect**: Clicking outside interactive elements clears selection
+15. **Compact UI**: Minimal padding and font sizes for efficient space usage
 
 ### Interaction Details
 
@@ -130,8 +131,8 @@ hindi,english,freq
 - Clicking outside answer slots deselects selected English words
 - Hints show pulsing animation on the correct answer
 - Drag and drop support for English words into answer slots
-- Hindi words section scrolls independently while English options remain visible
-- English options scroll horizontally using browser's default scrollbar
+- English options wrap naturally and are centered on screen
+- All sections scroll together as normal page content
 
 ### Browser Compatibility
 

@@ -6,25 +6,23 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
     background-color: #f5f5f5;
-    overflow: hidden;
+    padding: 5px;
 }
 
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 15px;
+    padding: 6px 10px;
     background-color: white;
     border-bottom: 1px solid #ddd;
-    flex-shrink: 0;
+    border-radius: 4px;
+    margin-bottom: 5px;
 }
 
 .logo {
-    font-size: 16px;
+    font-size: 10px;
     font-weight: bold;
     color: #333;
 }
@@ -38,8 +36,8 @@ body {
     background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 6px 10px;
-    font-size: 14px;
+    padding: 5px 8px;
+    font-size: 10px;
     cursor: pointer;
     border-radius: 4px;
 }
@@ -55,30 +53,32 @@ body {
 #hindi-words {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 6px;
-    padding: 10px;
-    flex: 1;
-    overflow-y: auto;
+    gap: 4px;
+    padding: 6px;
+    background-color: white;
+    border-radius: 4px;
+    margin-bottom: 5px;
 }
 
-.english-options-container {
-    padding: 8px 15px;
+.english-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    justify-content: center;
+    padding: 6px 10px;
     background-color: white;
     border-top: 1px solid #ddd;
-    flex-shrink: 0;
-    overflow-x: auto;
-    white-space: nowrap;
+    border-radius: 4px;
+    margin-bottom: 5px;
 }
 
 .english-option {
-    display: inline-block;
     background-color: #f8f9fa;
     border: 2px solid #dee2e6;
-    padding: 4px 8px;
+    padding: 3px 6px;
     font-size: 10px;
     cursor: pointer;
     border-radius: 4px;
-    margin-right: 6px;
 }
 
 .english-option:hover {
@@ -111,14 +111,14 @@ body {
 .hindi-row {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 6px 8px;
-    background-color: white;
+    gap: 6px;
+    padding: 4px 6px;
+    background-color: #f5f5f5;
     border-radius: 4px;
 }
 
 .hindi-word {
-    font-size: 15px;
+    font-size: 10px;
     font-weight: bold;
     min-width: 70px;
     color: #333;
@@ -126,13 +126,13 @@ body {
 
 .answer-slot {
     flex: 1;
-    min-height: 26px;
-    padding: 4px 8px;
+    min-height: 24px;
+    padding: 3px 6px;
     border: 2px dashed #ccc;
     border-radius: 4px;
-    background-color: #fafafa;
+    background-color: white;
     cursor: pointer;
-    font-size: 11px;
+    font-size: 10px;
 }
 
 .answer-slot:hover {
@@ -161,9 +161,9 @@ body {
 .freq-badge {
     background-color: #6c757d;
     color: white;
-    font-size: 9px;
+    font-size: 10px;
     font-weight: bold;
-    padding: 2px 4px;
+    padding: 1px 3px;
     border-radius: 10px;
     flex-shrink: 0;
 }
@@ -177,7 +177,7 @@ body {
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 10px;
     flex-shrink: 0;
 }
 
@@ -189,19 +189,19 @@ body {
     display: flex;
     justify-content: center;
     gap: 30px;
-    padding: 8px 15px;
+    padding: 6px 10px;
     background-color: white;
     border-top: 1px solid #ddd;
-    flex-shrink: 0;
+    border-radius: 4px;
 }
 
 .stats-footer .stat {
-    font-size: 11px;
+    font-size: 10px;
     color: #555;
 }
 
 .stats-footer .stat strong {
-    font-size: 13px;
+    font-size: 10px;
     color: #333;
 }
 

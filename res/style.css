@@ -71,7 +71,8 @@ body {
     display: flex;
     flex-direction: column;
     padding: 15px;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #hindi-words {
@@ -87,6 +88,75 @@ body {
     #hindi-words {
         grid-template-columns: 1fr;
         gap: 8px;
+    }
+
+    .logo {
+        font-size: 18px;
+    }
+
+    .hindi-word {
+        font-size: 18px;
+    }
+
+    .answer-slot {
+        font-size: 13px;
+    }
+
+    .english-option {
+        font-size: 13px;
+        padding: 6px 12px;
+    }
+
+    #generate, #clear, #check {
+        font-size: 16px;
+        padding: 8px 14px;
+    }
+}
+
+/* Mobile devices - reduce font sizes further */
+@media (max-width: 768px) {
+    .logo {
+        font-size: 16px;
+    }
+
+    .hindi-word {
+        font-size: 16px;
+        min-width: 80px;
+    }
+
+    .answer-slot {
+        font-size: 12px;
+        min-height: 28px;
+    }
+
+    .english-option {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+
+    .freq-badge {
+        font-size: 9px;
+        padding: 2px 4px;
+    }
+
+    .hint-btn {
+        width: 24px;
+        height: 24px;
+        font-size: 14px;
+    }
+
+    #generate, #clear, #check {
+        font-size: 15px;
+        padding: 8px 12px;
+        min-width: 40px;
+    }
+
+    .stats-footer .stat {
+        font-size: 12px;
+    }
+
+    .stats-footer .stat strong {
+        font-size: 14px;
     }
 }
 
@@ -191,8 +261,6 @@ body {
     border-radius: 6px;
     justify-content: center;
     align-content: flex-start;
-    flex: 1;
-    overflow-y: auto;
 }
 
 .english-option {

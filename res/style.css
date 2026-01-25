@@ -21,6 +21,7 @@ body {
     background-color: white;
     border-bottom: 1px solid #ddd;
     flex-shrink: 0;
+    z-index: 10;
 }
 
 .logo {
@@ -78,20 +79,46 @@ body {
     margin: 0 auto;
 }
 
+#english-options-container {
+    display: flex;
+    justify-content: center;
+    padding: 8px 15px;
+    background-color: white;
+    border-top: 1px solid #ddd;
+    flex-shrink: 0;
+    z-index: 5;
+}
+
 #english-options {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 6px;
-    padding: 8px;
-    background-color: white;
-    border-radius: 6px;
-    justify-content: center;
-    align-content: flex-start;
-    flex-shrink: 0;
-    border-top: 2px solid #ddd;
+    justify-content: flex-start;
+    align-items: center;
     max-width: 400px;
-    width: 100%;
-    margin: 0 auto;
+    width: 400px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    min-height: 40px;
+    height: 40px;
+}
+
+#english-options::-webkit-scrollbar {
+    height: 8px;
+}
+
+#english-options::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+#english-options::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+#english-options::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 
@@ -206,6 +233,7 @@ body {
     cursor: pointer;
     border-radius: 4px;
     transition: all 0.2s;
+    flex-shrink: 0;
 }
 
 .english-option:hover {
@@ -254,6 +282,7 @@ body {
     background-color: white;
     border-top: 1px solid #ddd;
     flex-shrink: 0;
+    z-index: 6;
 }
 
 .stats-footer .stat {

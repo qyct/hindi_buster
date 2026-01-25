@@ -6,7 +6,7 @@ A single-page web application for learning Hindi vocabulary through interactive 
 
 - **Weighted Random Selection**: High-frequency words appear more often in quizzes
 - **10 Hindi Words**: Each quiz displays 10 Hindi words to translate
-- **20 English Options**: Includes 10 correct answers + 10 distractor words for added challenge
+- **10 English Options**: 10 correct answers to match with 10 Hindi words
 - **Two Input Methods**:
   - Click to select, then click to place
   - Drag and drop English words into answer slots
@@ -78,9 +78,13 @@ Statistics are displayed at the bottom of the page:
 
 - **Mobile-First Design**: Single column layout with 10 words stacked vertically
 - **Consistent Experience**: Same layout on mobile, tablet, and desktop
-- **Scrollable Quiz**: Hindi words and English options scroll together in the middle section
+- **Centered Content**: Hindi words and English options centered with max-width of 400px
+- **Flat Structure**: Header, Hindi words, English options, and Stats all at same level
+- **Scrollable Hindi Words**: Hindi words section scrolls independently
+- **Fixed English Options**: English options fixed below Hindi words (above stats)
 - **Fixed Header**: Logo and control buttons always visible at top
-- **Fixed Footer**: Statistics always visible at bottom
+- **Fixed Stats**: Statistics always visible at bottom
+- **Compact Design**: Reduced padding and font sizes for efficient use of space
 
 ## Technical Details
 
@@ -103,16 +107,19 @@ hindi,english,freq
 
 ### Key Design Decisions
 
-1. **20 English Options for 10 Hindi Words**: Increases difficulty by adding distractor words
+1. **10 English Options for 10 Hindi Words**: Direct matching without distractors for focused learning
 2. **One-to-One Matching**: Each English word can only be used once per quiz
 3. **Session-Only Stats**: Statistics reset on page refresh for clean slate each session
 4. **Weighted Random**: Common words appear more frequently for better learning
 5. **Mobile-First Design**: Single column layout works identically on all devices without media queries
-6. **Independent Scrolling**: Quiz section scrolls while header and stats remain fixed
-7. **LocalStorage Caching**: CSV data loads once and caches for instant subsequent loads
-8. **Unicode Icons**: Standard Unicode symbols for buttons (lightweight, scalable)
-9. **Frequency Badges**: Shows relative word importance with abbreviated format
-10. **Click Outside to Deselect**: Clicking outside interactive elements clears selection
+6. **Flat HTML Structure**: All main sections (header, hindi, english, stats) at same level
+7. **Centered Content Layout**: 400px max-width centered on screen for optimal readability
+8. **Independent Scrolling**: Hindi words scroll while English options and stats remain fixed
+9. **LocalStorage Caching**: CSV data loads once and caches for instant subsequent loads
+10. **Unicode Icons**: Standard Unicode symbols for buttons (lightweight, scalable)
+11. **Frequency Badges**: Shows relative word importance with abbreviated format
+12. **Click Outside to Deselect**: Clicking outside interactive elements clears selection
+13. **Compact UI**: Minimal padding and font sizes for efficient space usage
 
 ### Interaction Details
 
@@ -120,6 +127,7 @@ hindi,english,freq
 - Clicking outside answer slots/deselects selected English words
 - Hints show pulsing animation on the correct answer
 - Drag and drop with visual feedback during hover
+- Hindi words section scrolls independently while English options remain visible
 - Auto-scroll to highlighted hint words if not visible
 
 ### Browser Compatibility
@@ -135,11 +143,11 @@ hindi,english,freq
 
 Edit `res/app.js`:
 ```javascript
-// Change quiz word count and distractor count
-const quizData = generateQuiz(10, 10); // (quiz words, distractor words)
+// Change quiz word count (first parameter)
+const quizData = generateQuiz(10, 0); // (quiz words, extra words)
 
-// Example: 15 Hindi words with 10 distractors
-const quizData = generateQuiz(15, 10);
+// Example: 15 Hindi words with 5 extra options
+const quizData = generateQuiz(15, 5);
 ```
 
 ### Change Word Selection Algorithm

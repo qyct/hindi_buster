@@ -14,9 +14,10 @@ A single-page web application for learning Hindi vocabulary through interactive 
 - **Hint System**: Click "!" button to highlight the correct answer
 - **Frequency Badges**: Shows word frequency (e.g., 125k, 1.5M) for learning priority
 - **Session Statistics**: Tracks Correct, Wrong, and Hints (resets on page refresh)
-- **Responsive Layout**: 1 column in portrait mode, 2 columns in landscape
-- **Single Page Layout**: Everything fits on screen without scrolling
-- **Mobile Friendly**: Viewport meta tag for proper mobile scaling
+- **Single Column Layout**: 10 Hindi words stacked vertically
+- **Compact Design**: Optimized font sizes and spacing for readability on all screens
+- **Mobile-First Design**: Single column layout optimized for all devices
+- **Fixed Stats Bar**: Statistics always visible at bottom, quiz scrolls independently
 
 ## File Structure
 
@@ -75,13 +76,11 @@ Statistics are displayed at the bottom of the page:
 
 ## Layout
 
-### Portrait Mode (height > width)
-- Single column with 10 words stacked vertically
-- Optimized for mobile devices
-
-### Landscape Mode (width > height)
-- Two columns with 5 words each
-- Maximizes screen real estate on desktop
+- **Mobile-First Design**: Single column layout with 10 words stacked vertically
+- **Consistent Experience**: Same layout on mobile, tablet, and desktop
+- **Scrollable Quiz**: Hindi words and English options scroll together in the middle section
+- **Fixed Header**: Logo and control buttons always visible at top
+- **Fixed Footer**: Statistics always visible at bottom
 
 ## Technical Details
 
@@ -108,9 +107,9 @@ hindi,english,freq
 2. **One-to-One Matching**: Each English word can only be used once per quiz
 3. **Session-Only Stats**: Statistics reset on page refresh for clean slate each session
 4. **Weighted Random**: Common words appear more frequently for better learning
-5. **Single Page**: No scrolling required - everything fits in viewport
-6. **LocalStorage Caching**: CSV data loads once and caches for instant subsequent loads
-7. **Responsive Design**: Adapts layout based on screen orientation
+5. **Mobile-First Design**: Single column layout works identically on all devices without media queries
+6. **Independent Scrolling**: Quiz section scrolls while header and stats remain fixed
+7. **LocalStorage Caching**: CSV data loads once and caches for instant subsequent loads
 8. **Unicode Icons**: Standard Unicode symbols for buttons (lightweight, scalable)
 9. **Frequency Badges**: Shows relative word importance with abbreviated format
 10. **Click Outside to Deselect**: Clicking outside interactive elements clears selection

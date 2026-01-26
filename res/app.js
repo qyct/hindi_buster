@@ -203,10 +203,11 @@ function renderQuiz() {
 
 // Select English word
 function selectEnglish(english, btn) {
-    // Don't allow selection if word is already used
+    // Don't allow selection if word is already correctly placed
     if (usedEnglish.has(english)) {
         return;
     }
+    // Allow selection even if word is currently in an incorrect slot
     selectedEnglish = english;
     document.querySelectorAll(".english-option").forEach(b => b.classList.remove("selected"));
     btn.classList.add("selected");
@@ -218,37 +219,82 @@ function deselectEnglish() {
     document.querySelectorAll(".english-option").forEach(b => b.classList.remove("selected"));
 }
 
+// Clear a single answer slot
+function clearSlot(slot, index) {
+    const answer = userAnswers[index];
+    const correctAnswer = currentQuiz[index].english;
+
+    // Remove from usedEnglish only if it was a correct answer
+    if (answer === correctAnswer) {
+        usedEnglish.delete(answer);
+        // Make the English option available again
+        document.querySelectorAll(".english-option").forEach(btn => {
+            if (btn.dataset.english === answer) {
+                btn.classList.remove("used");
+            }
+        });
+    }
+
+    // Clear the slot
+    delete userAnswers[index];
+    slot.textContent = "";
+    slot.classList.remove("filled", "correct", "incorrect");
+}
+
 // Place answer in slot
 function placeAnswer(slot) {
     if (!selectedEnglish) return;
 
     const index = slot.dataset.index;
+    const previousAnswer = userAnswers[index];
+    const correctAnswer = currentQuiz[index].english;
 
-    // If this slot already has an answer, remove it from used set
-    if (userAnswers[index]) {
-        usedEnglish.delete(userAnswers[index]);
+    // If this slot already has an answer, remove it from used set (if it was correct)
+    if (previousAnswer) {
+        // Only remove from usedEnglish if the previous answer was correct
+        if (previousAnswer === currentQuiz[index].english) {
+            usedEnglish.delete(previousAnswer);
+            // Remove used class from old English option
+            document.querySelectorAll(".english-option").forEach(btn => {
+                if (btn.dataset.english === previousAnswer) {
+                    btn.classList.remove("used");
+                }
+            });
+        }
     }
 
-    // If the selected English is already used, don't allow
+    // If the selected English is already used (correctly used elsewhere), don't allow
     if (usedEnglish.has(selectedEnglish)) {
         return;
     }
 
     userAnswers[index] = selectedEnglish;
-    usedEnglish.add(selectedEnglish);
     slot.textContent = selectedEnglish;
     slot.classList.add("filled");
 
-    // Mark the English option as used and deselect
-    document.querySelectorAll(".english-option").forEach(btn => {
-        if (btn.dataset.english === selectedEnglish) {
-            btn.classList.add("used");
-            btn.classList.remove("selected");
-        }
-    });
+    // Mark as used only if correct
+    if (selectedEnglish === correctAnswer) {
+        usedEnglish.add(selectedEnglish);
+        document.querySelectorAll(".english-option").forEach(btn => {
+            if (btn.dataset.english === selectedEnglish) {
+                btn.classList.add("used");
+                btn.classList.remove("selected");
+            }
+        });
+    } else {
+        // Just deselect, don't mark as used
+        document.querySelectorAll(".english-option").forEach(btn => {
+            if (btn.dataset.english === selectedEnglish) {
+                btn.classList.remove("selected");
+            }
+        });
+    }
 
     // Clear selection
     selectedEnglish = null;
+
+    // Auto-evaluate this answer
+    evaluateAnswer(index);
 }
 
 // Drag and drop handlers
@@ -279,33 +325,44 @@ function handleDrop(e, slot, index) {
     const english = e.dataTransfer.getData("text/plain");
     if (!english) return;
 
-    // If this slot already has an answer, remove it from used set
-    if (userAnswers[index]) {
-        usedEnglish.delete(userAnswers[index]);
-        // Remove used class from old English option
-        document.querySelectorAll(".english-option").forEach(btn => {
-            if (btn.dataset.english === userAnswers[index]) {
-                btn.classList.remove("used");
-            }
-        });
+    const previousAnswer = userAnswers[index];
+    const correctAnswer = currentQuiz[index].english;
+
+    // If this slot already has an answer, remove it from used set (if it was correct)
+    if (previousAnswer) {
+        // Only remove from usedEnglish if the previous answer was correct
+        if (previousAnswer === correctAnswer) {
+            usedEnglish.delete(previousAnswer);
+            // Remove used class from old English option
+            document.querySelectorAll(".english-option").forEach(btn => {
+                if (btn.dataset.english === previousAnswer) {
+                    btn.classList.remove("used");
+                }
+            });
+        }
     }
 
-    // If the English word is already used elsewhere, don't allow
+    // If the English word is already used (correctly used elsewhere), don't allow
     if (usedEnglish.has(english)) {
         return;
     }
 
     userAnswers[index] = english;
-    usedEnglish.add(english);
     slot.textContent = english;
     slot.classList.add("filled");
 
-    // Mark the English option as used
-    document.querySelectorAll(".english-option").forEach(btn => {
-        if (btn.dataset.english === english) {
-            btn.classList.add("used");
-        }
-    });
+    // Mark as used only if correct
+    if (english === correctAnswer) {
+        usedEnglish.add(english);
+        document.querySelectorAll(".english-option").forEach(btn => {
+            if (btn.dataset.english === english) {
+                btn.classList.add("used");
+            }
+        });
+    }
+
+    // Auto-evaluate this answer
+    evaluateAnswer(index);
 }
 
 // Show hint - highlight correct answer
@@ -329,20 +386,41 @@ function showHint(index) {
     updateResultDisplay();
 }
 
-// Clear answers
-function clearAnswers() {
-    userAnswers = {};
-    selectedEnglish = null;
-    usedEnglish.clear();
-    hintsUsed = 0;
-    // Don't clear checkedAnswers - we don't want to recount the same answers
-    document.querySelectorAll(".answer-slot").forEach(slot => {
-        slot.textContent = "";
-        slot.classList.remove("filled", "correct", "incorrect");
-    });
-    document.querySelectorAll(".english-option").forEach(b => {
-        b.classList.remove("selected", "hint-highlight", "used");
-    });
+// Evaluate a single answer
+function evaluateAnswer(index) {
+    const slot = document.querySelector(`.answer-slot[data-index="${index}"]`);
+    const userAnswer = userAnswers[index];
+    const correctAnswer = currentQuiz[index].english;
+
+    // Clear previous styling for this slot
+    slot.classList.remove("correct", "incorrect");
+
+    const answerKey = `${index}_${userAnswer}`;
+
+    if (userAnswer === correctAnswer) {
+        slot.classList.add("correct");
+        // Only count if this specific answer hasn't been counted yet
+        if (!checkedAnswers.has(answerKey)) {
+            totalCorrect++;
+            checkedAnswers.add(answerKey);
+        }
+    } else if (userAnswer) {
+        slot.classList.add("incorrect");
+        // Only count if this specific answer hasn't been counted yet
+        if (!checkedAnswers.has(answerKey)) {
+            totalWrong++;
+            checkedAnswers.add(answerKey);
+        }
+
+        // Auto-clear incorrect answer after 1 second
+        setTimeout(() => {
+            // Only clear if this slot still has the same incorrect answer
+            if (userAnswers[index] === userAnswer && userAnswer !== correctAnswer) {
+                clearSlot(slot, index);
+            }
+        }, 1000);
+    }
+
     updateResultDisplay();
 }
 
@@ -357,48 +435,8 @@ function updateResultDisplay() {
     if (hintCount) hintCount.textContent = totalHints;
 }
 
-// Check answers
-function checkAnswers() {
-    let correct = 0;
-    let wrong = 0;
-
-    document.querySelectorAll(".hindi-row").forEach(row => {
-        const slot = row.querySelector(".answer-slot");
-        const index = slot.dataset.index;
-        const userAnswer = userAnswers[index];
-        const correctAnswer = currentQuiz[index].english;
-
-        // Clear previous styling
-        slot.classList.remove("correct", "incorrect");
-
-        // Only count if answer hasn't been checked before
-        const answerKey = `${index}_${userAnswer}`;
-
-        if (userAnswer === correctAnswer) {
-            slot.classList.add("correct");
-            // Only count if this specific answer hasn't been counted yet
-            if (!checkedAnswers.has(answerKey)) {
-                correct++;
-                checkedAnswers.add(answerKey);
-            }
-        } else if (userAnswer) {
-            slot.classList.add("incorrect");
-            // Only count if this specific answer hasn't been counted yet
-            if (!checkedAnswers.has(answerKey)) {
-                wrong++;
-                checkedAnswers.add(answerKey);
-            }
-        }
-    });
-
-    // Update totals with new results
-    totalCorrect += correct;
-    totalWrong += wrong;
-    updateResultDisplay();
-}
-
-// UI
-document.getElementById("generate").addEventListener("click", () => {
+// UI - Next button generates a new quiz
+document.getElementById("next").addEventListener("click", () => {
     const quizData = generateQuiz(10, 0);
     currentQuiz = quizData.quizWords;
     currentEnglishOptions = quizData.allWords;
@@ -406,10 +444,6 @@ document.getElementById("generate").addEventListener("click", () => {
     renderQuiz();
     updateResultDisplay();
 });
-
-document.getElementById("check").addEventListener("click", checkAnswers);
-
-document.getElementById("clear").addEventListener("click", clearAnswers);
 
 // Init
 loadWords();

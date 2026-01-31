@@ -41,7 +41,7 @@ body {
     display: flex;
     gap: 5px;
     flex: 1;
-    max-width: 100px;
+    max-width: 140px;
 }
 
 #quiz-seed {

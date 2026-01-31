@@ -221,8 +221,8 @@ body {
     background-color: #7b1fa2;
 }
 
-/* Stats footer - fixed at bottom */
-.stats-footer {
+/* Footer - fixed at bottom */
+.footer {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -323,7 +323,7 @@ body {
 /* Toast notification */
 .toast {
     position: fixed;
-    top: 50%;
+    top: 86%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #323232;
@@ -407,7 +407,7 @@ body {
 
     #hindi-words {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 8px;
         padding: 12px;
     }

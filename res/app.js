@@ -203,14 +203,17 @@ function generateQuizForSeed(seed, count = 100) {
     const selected = new Set();
     let randomSeed = seedValue;
 
+    // Calculate adjusted total frequency (divided by 1000)
+    const adjustedTotalFreq = TOTAL_FREQ / 1000;
+
     // Select words for the quiz
     while (selected.size < count) {
         // Use seeded random
-        let r = seededRandom(randomSeed) * TOTAL_FREQ;
+        let r = seededRandom(randomSeed) * adjustedTotalFreq;
         randomSeed++;
 
         for (const w of WORDS) {
-            r -= w.freq;
+            r -= (w.freq / 1000);
             if (r <= 0) {
                 selected.add(w);
                 break;

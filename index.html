@@ -10,20 +10,28 @@
 
 <div class="header">
     <h1 class="logo">Hindi Buster</h1>
-    <div class="buttons">
-        <button id="next" title="Next">→</button>
+    <div class="seed-section">
+        <input type="text" id="quiz-seed" placeholder="seed" maxlength="2" />
+        <button id="load" title="Load words for this seed">→</button>
     </div>
 </div>
 
 <div id="hindi-words"></div>
 
-<div class="english-options" id="english-options"></div>
-
 <div class="stats-footer">
-    <span class="stat">Correct: <strong class="correct-count" id="correct-count">0</strong></span>
-    <span class="stat">Wrong: <strong class="wrong-count" id="wrong-count">0</strong></span>
-    <span class="stat">Hints: <strong class="hint-count" id="hint-count">0</strong></span>
+    <div class="stats-section">
+        <span class="stat"><span class="stat-label">✓</span> <strong class="correct-count" id="correct-count">0</strong></span>
+        <span class="stat"><span class="stat-label">✗</span> <strong class="wrong-count" id="wrong-count">0</strong></span>
+        <span class="stat"><span class="stat-label">!</span> <strong class="hint-count" id="hint-count">0</strong></span>
+        <span class="stat"><span class="stat-label">⚑</span> <strong class="flagged-count" id="flagged-count">0</strong></span>
+    </div>
+    <div class="actions-section">
+        <button id="copy-flagged" title="Copy flagged words to clipboard">⎘</button>
+        <button id="clear-all" title="Clear all flagged words and stats">✕</button>
+    </div>
 </div>
+
+<div id="toast" class="toast"></div>
 
 <script src="res/app.js"></script>
 </body>

@@ -41,7 +41,7 @@ body {
     display: flex;
     gap: 5px;
     flex: 1;
-    max-width: 150px;
+    max-width: 100px;
 }
 
 #quiz-seed {
@@ -126,6 +126,7 @@ body {
     min-width: 0;
     position: relative;
     z-index: 2;
+    height: 44px;
 }
 
 .english-dropdown:focus {
@@ -360,7 +361,7 @@ body {
     }
 
     .seed-section {
-        max-width: 200px;
+        max-width: 120px;
     }
 
     #hindi-words {
@@ -402,7 +403,7 @@ body {
     }
 
     .seed-section {
-        max-width: 250px;
+        max-width: 140px;
     }
 
     #hindi-words {

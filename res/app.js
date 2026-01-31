@@ -251,7 +251,6 @@ function renderQuiz() {
         input.dataset.correctAnswer = word.english;
         input.dataset.hindiWord = word.hindi;
         input.setAttribute("list", "english-options-list");
-        input.placeholder = "Select";
         input.autocomplete = "off";
 
         // Hint button

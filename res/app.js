@@ -1,6 +1,7 @@
 const STORAGE_KEY = "hindi_words_v1";
 const FLAGGED_KEY = "hindi_flagged_words";
 const STATS_KEY = "hindi_stats";
+const SEED_KEY = "hindi_current_seed";
 let WORDS = [];
 let TOTAL_FREQ = 0;
 let currentQuiz = [];
@@ -38,6 +39,48 @@ function generateRandomSeed() {
         seed += letters.charAt(Math.floor(Math.random() * letters.length));
     }
     return seed;
+}
+
+// Increment seed (aa -> ab, az -> ba, zz -> aa)
+function incrementSeed(seed) {
+    const letters = 'abcdefghijklmnopqrstuvwxyz';
+    let first = seed.charAt(0);
+    let second = seed.charAt(1);
+
+    if (second === 'z') {
+        second = 'a';
+        first = first === 'z' ? 'a' : letters.charAt(letters.indexOf(first) + 1);
+    } else {
+        second = letters.charAt(letters.indexOf(second) + 1);
+    }
+
+    return first + second;
+}
+
+// Decrement seed (aa -> zz, ab -> aa, ba -> az)
+function decrementSeed(seed) {
+    const letters = 'abcdefghijklmnopqrstuvwxyz';
+    let first = seed.charAt(0);
+    let second = seed.charAt(1);
+
+    if (second === 'a') {
+        second = 'z';
+        first = first === 'a' ? 'z' : letters.charAt(letters.indexOf(first) - 1);
+    } else {
+        second = letters.charAt(letters.indexOf(second) - 1);
+    }
+
+    return first + second;
+}
+
+// Save seed to localStorage
+function saveSeed(seed) {
+    localStorage.setItem(SEED_KEY, seed);
+}
+
+// Load seed from localStorage
+function loadSeed() {
+    return localStorage.getItem(SEED_KEY);
 }
 
 // Format frequency number to abbreviated form
@@ -133,9 +176,10 @@ async function loadWords() {
     loadFlaggedWords();
     loadStats();
 
-    // Auto-generate quiz on load with random seed
-    const randomSeed = generateRandomSeed();
-    loadQuizForSeed(randomSeed);
+    // Auto-generate quiz on load with saved seed or random
+    const savedSeed = loadSeed();
+    const seed = savedSeed || generateRandomSeed();
+    loadQuizForSeed(seed);
 }
 
 // CSV parser (headers: hindi,english,freq)
@@ -196,6 +240,7 @@ function loadQuizForSeed(seed) {
 
     currentSeed = finalSeed;
     document.getElementById("quiz-seed").value = finalSeed;
+    saveSeed(finalSeed);
 
     currentQuiz = generateQuizForSeed(finalSeed, 100);
     hintsUsed = 0;
@@ -494,13 +539,26 @@ document.getElementById("clear-all").addEventListener("click", () => {
     showToast(`Cleared ${message.join(" and ")}!`);
 });
 
-// UI - Next button loads quiz for entered seed (or random if empty)
-document.getElementById("load").addEventListener("click", () => {
+// UI - Next button loads quiz for next seed
+document.getElementById("next").addEventListener("click", () => {
     const seedInput = document.getElementById("quiz-seed");
     let seed = seedInput.value.trim().toLowerCase() || generateRandomSeed();
     // Only keep letters, max 2
     seed = seed.replace(/[^a-z]/g, '').substring(0, 2);
-    loadQuizForSeed(seed);
+    // Increment the seed
+    const nextSeed = incrementSeed(seed || generateRandomSeed());
+    loadQuizForSeed(nextSeed);
+});
+
+// UI - Previous button loads quiz for previous seed
+document.getElementById("prev").addEventListener("click", () => {
+    const seedInput = document.getElementById("quiz-seed");
+    let seed = seedInput.value.trim().toLowerCase() || generateRandomSeed();
+    // Only keep letters, max 2
+    seed = seed.replace(/[^a-z]/g, '').substring(0, 2);
+    // Decrement the seed
+    const prevSeed = decrementSeed(seed || generateRandomSeed());
+    loadQuizForSeed(prevSeed);
 });
 
 // Auto-format seed input to only accept letters (max 2)
@@ -512,7 +570,7 @@ document.getElementById("quiz-seed").addEventListener("input", (e) => {
 // Allow Enter key in the seed input
 document.getElementById("quiz-seed").addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
-        document.getElementById("load").click();
+        document.getElementById("next").click();
     }
 });
 

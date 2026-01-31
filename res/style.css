@@ -59,8 +59,8 @@ body {
     border-color: #2196F3;
 }
 
-#load {
-    background-color: #28a745;
+#prev, #next {
+    background-color: #6c757d;
     color: white;
     border: none;
     padding: 6px 10px;
@@ -71,12 +71,12 @@ body {
     flex-shrink: 0;
 }
 
-#load:hover {
-    background-color: #218838;
+#prev:hover, #next:hover {
+    background-color: #5a6268;
 }
 
-#load:active {
-    background-color: #1e7e34;
+#prev:active, #next:active {
+    background-color: #4e555b;
 }
 
 /* Hindi words container */
@@ -310,6 +310,14 @@ body {
 }
 
 #clear-flagged:hover {
+    background-color: #c82333;
+}
+
+#clear-all {
+    background-color: #dc3545;
+}
+
+#clear-all:hover {
     background-color: #c82333;
 }
 

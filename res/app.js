@@ -6,7 +6,6 @@ let WORDS = [];
 let TOTAL_FREQ = 0;
 let currentQuiz = [];
 let currentSeed = null;
-let hintsUsed = 0;
 let totalCorrect = 0;
 let totalWrong = 0;
 let totalHints = 0;
@@ -298,13 +297,6 @@ function renderQuiz() {
         input.setAttribute("list", "english-options-list");
         input.autocomplete = "off";
 
-        // Hint button
-        const hintBtn = document.createElement("button");
-        hintBtn.className = "hint-btn";
-        hintBtn.textContent = "!";
-        hintBtn.title = "Show hint";
-        hintBtn.dataset.index = index;
-
         // Flag button
         const flagBtn = document.createElement("button");
         flagBtn.className = "flag-btn";
@@ -329,7 +321,6 @@ function renderQuiz() {
         row.appendChild(freqBadge);
 
         row.appendChild(flagBtn);
-        row.appendChild(hintBtn);
 
         hindiContainer.appendChild(row);
 
@@ -341,7 +332,7 @@ function renderQuiz() {
             setTimeout(() => {
                 const value = input.value.trim();
                 if (!value) {
-                    input.classList.remove("correct", "incorrect", "hint-highlight");
+                    input.classList.remove("correct", "incorrect");
                     lastEvaluatedValue = "";
                     return;
                 }
@@ -384,11 +375,6 @@ function renderQuiz() {
             checkAndEvaluate();
         });
 
-        // Add click event to hint button
-        hintBtn.addEventListener("click", () => {
-            showHint(input, index);
-        });
-
         // Add click event to flag button
         flagBtn.addEventListener("click", () => {
             toggleFlag(word.english);
@@ -403,25 +389,6 @@ function renderQuiz() {
     });
 }
 
-// Show hint - highlight correct answer in dropdown
-function showHint(input, index) {
-    const correctAnswer = currentQuiz[index].english;
-
-    // Find the correct option and highlight it temporarily
-    input.classList.add("hint-highlight");
-    input.value = correctAnswer;
-
-    // Increment hint counters
-    totalHints++;
-    updateResultDisplay();
-
-    // Remove highlight after 2 seconds
-    setTimeout(() => {
-        input.classList.remove("hint-highlight");
-        // Don't reset the value - let the user keep the answer if they want
-    }, 2000);
-}
-
 // Evaluate a single answer
 function evaluateAnswer(input, index, userAnswer) {
     const correctAnswer = currentQuiz[index].english;
@@ -430,12 +397,12 @@ function evaluateAnswer(input, index, userAnswer) {
 
     if (!userAnswer) {
         // No answer selected
-        input.classList.remove("correct", "incorrect", "hint-highlight");
+        input.classList.remove("correct", "incorrect");
         return;
     }
 
     // Clear previous styling
-    input.classList.remove("correct", "incorrect", "hint-highlight");
+    input.classList.remove("correct", "incorrect");
 
     // Track if this index was already answered correctly
     const wasCorrect = checkedAnswers.has(`${currentSeed}_${index}_correct`);
@@ -466,11 +433,9 @@ function evaluateAnswer(input, index, userAnswer) {
 function updateResultDisplay() {
     const correctCount = document.getElementById("correct-count");
     const wrongCount = document.getElementById("wrong-count");
-    const hintCount = document.getElementById("hint-count");
 
     if (correctCount) correctCount.textContent = totalCorrect;
     if (wrongCount) wrongCount.textContent = totalWrong;
-    if (hintCount) hintCount.textContent = totalHints;
 
     // Save stats to localStorage
     saveStats();
@@ -570,7 +535,11 @@ document.getElementById("quiz-seed").addEventListener("input", (e) => {
 // Allow Enter key in the seed input
 document.getElementById("quiz-seed").addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
-        document.getElementById("next").click();
+        const seedInput = document.getElementById("quiz-seed");
+        let seed = seedInput.value.trim().toLowerCase() || generateRandomSeed();
+        // Only keep letters, max 2
+        seed = seed.replace(/[^a-z]/g, '').substring(0, 2);
+        loadQuizForSeed(seed);
     }
 });
 

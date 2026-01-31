@@ -254,6 +254,10 @@ function loadQuizForSeed(seed) {
 // Render quiz with dropdowns
 function renderQuiz() {
     const hindiContainer = document.getElementById("hindi-words");
+
+    // Sort quiz by frequency (highest first) before rendering
+    currentQuiz.sort((a, b) => b.freq - a.freq);
+
     const englishOptions = getAllEnglishOptions(currentQuiz);
 
     // Sort English options alphabetically for better UX in dropdown

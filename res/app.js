@@ -2,6 +2,7 @@ const STORAGE_KEY = "hindi_words_v1";
 const FLAGGED_KEY = "hindi_flagged_words";
 const STATS_KEY = "hindi_stats";
 const SEED_KEY = "hindi_current_seed";
+const GREEN_KEY = "hindi_green_items";
 let WORDS = [];
 let TOTAL_FREQ = 0;
 let currentQuiz = [];
@@ -11,6 +12,7 @@ let totalWrong = 0;
 let totalHints = 0;
 let checkedAnswers = new Set();
 let flaggedWords = new Set();
+let greenItems = new Set();
 
 // Generate a random 2-letter alphabet seed
 function generateRandomSeed() {
@@ -122,6 +124,12 @@ function updateFlaggedCount() {
     if (flaggedCount) flaggedCount.textContent = flaggedWords.size;
 }
 
+// Update green count display
+function updateGreenCount() {
+    const greenCount = document.getElementById("green-count");
+    if (greenCount) greenCount.textContent = greenItems.size;
+}
+
 // Toggle flag on a word
 function toggleFlag(word) {
     if (flaggedWords.has(word)) {
@@ -135,6 +143,21 @@ function toggleFlag(word) {
 // Check if a word is flagged
 function isFlagged(word) {
     return flaggedWords.has(word);
+}
+
+// Load green items from localStorage
+function loadGreenItems() {
+    const green = localStorage.getItem(GREEN_KEY);
+    if (green) {
+        greenItems = new Set(JSON.parse(green));
+    }
+    updateGreenCount();
+}
+
+// Save green items to localStorage
+function saveGreenItems() {
+    localStorage.setItem(GREEN_KEY, JSON.stringify([...greenItems]));
+    updateGreenCount();
 }
 
 // Load CSV once and cache
@@ -153,9 +176,10 @@ async function loadWords() {
         console.log("Fetched CSV and cached:", WORDS.length);
     }
 
-    // Load flagged words and stats
+    // Load flagged words, stats, and green items
     loadFlaggedWords();
     loadStats();
+    loadGreenItems();
 
     // Auto-generate quiz on load with saved seed or random
     const savedSeed = loadSeed();
@@ -285,6 +309,14 @@ function renderQuiz() {
         input.setAttribute("list", "english-options-list");
         input.autocomplete = "off";
 
+        // Check if this word was previously saved as green (correctly answered)
+        if (greenItems.has(word.english)) {
+            input.value = word.english;
+            input.classList.add("correct");
+            input.disabled = true;
+            checkedAnswers.add(`${currentSeed}_${index}_correct`);
+        }
+
         // Flag button
         const flagBtn = document.createElement("button");
         flagBtn.className = "flag-btn";
@@ -404,6 +436,9 @@ function evaluateAnswer(input, index, userAnswer) {
             console.log(`✓ Correct! Total correct: ${totalCorrect}`);
         }
         checkedAnswers.add(`${currentSeed}_${index}_correct`);
+        // Save to green items for persistence (across all seeds)
+        greenItems.add(correctAnswer);
+        saveGreenItems();
     } else {
         input.classList.add("incorrect");
         // Only count if not already correct
@@ -462,34 +497,46 @@ document.getElementById("copy-flagged").addEventListener("click", async () => {
     }
 });
 
-// Clear all flagged words and stats
-document.getElementById("clear-all").addEventListener("click", () => {
-    const flaggedCount = flaggedWords.size;
-    const hasStats = totalCorrect > 0 || totalWrong > 0 || totalHints > 0;
-
-    if (flaggedCount === 0 && !hasStats) {
-        showToast("Nothing to clear!");
+// Clear stats
+document.getElementById("clear-stats").addEventListener("click", () => {
+    if (totalCorrect === 0 && totalWrong === 0 && totalHints === 0) {
+        showToast("No stats to clear!");
         return;
     }
 
-    // Clear flagged words
-    flaggedWords.clear();
-    saveFlaggedWords();
-
-    // Clear stats
     totalCorrect = 0;
     totalWrong = 0;
     totalHints = 0;
     updateResultDisplay();
+    showToast("Cleared stats!");
+});
 
-    // Re-render quiz to update flag buttons
+// Clear flagged words
+document.getElementById("clear-flagged").addEventListener("click", () => {
+    if (flaggedWords.size === 0) {
+        showToast("No flagged words to clear!");
+        return;
+    }
+
+    const flaggedCount = flaggedWords.size;
+    flaggedWords.clear();
+    saveFlaggedWords();
     renderQuiz();
+    showToast(`Cleared ${flaggedCount} flagged words!`);
+});
 
-    // Show what was cleared
-    let message = [];
-    if (flaggedCount > 0) message.push(`${flaggedCount} flagged words`);
-    if (hasStats) message.push("stats");
-    showToast(`Cleared ${message.join(" and ")}!`);
+// Clear saved green items
+document.getElementById("clear-green").addEventListener("click", () => {
+    if (greenItems.size === 0) {
+        showToast("No saved green items to clear!");
+        return;
+    }
+
+    const greenCount = greenItems.size;
+    greenItems.clear();
+    saveGreenItems();
+    renderQuiz();
+    showToast(`Cleared ${greenCount} saved green items!`);
 });
 
 // UI - Next button loads quiz for next seed

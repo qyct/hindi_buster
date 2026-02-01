@@ -12,24 +12,6 @@ let totalHints = 0;
 let checkedAnswers = new Set();
 let flaggedWords = new Set();
 
-// Simple seeded random number generator
-function seededRandom(seed) {
-    let x = Math.sin(seed++) * 10000;
-    return x - Math.floor(x);
-}
-
-// Generate a numeric seed from a string seed
-function stringToSeed(str) {
-    let hash = 0;
-    if (str.length === 0) return hash;
-    for (let i = 0; i < str.length; i++) {
-        const char = str.charCodeAt(i);
-        hash = ((hash << 5) - hash) + char;
-        hash = hash & hash;
-    }
-    return Math.abs(hash);
-}
-
 // Generate a random 2-letter alphabet seed
 function generateRandomSeed() {
     const letters = 'abcdefghijklmnopqrstuvwxyz';
@@ -198,30 +180,29 @@ function parseCSV(text) {
 }
 
 // Generate quiz words based on a seed
+// Seeds map to consecutive ranges of 100 words: aa=0-99, ab=100-199, etc.
+// When range exceeds total words, wraps around to beginning
 function generateQuizForSeed(seed, count = 100) {
-    const seedValue = stringToSeed(seed);
-    const selected = new Set();
-    let randomSeed = seedValue;
+    // Convert 2-letter seed to numeric index
+    // aa -> 0, ab -> 1, az -> 25, ba -> 26, etc.
+    const first = seed.charCodeAt(0) - 97;  // 'a' = 97
+    const second = seed.charCodeAt(1) - 97;
+    const seedIndex = first * 26 + second;
 
-    // Calculate adjusted total frequency (divided by 1000)
-    const adjustedTotalFreq = TOTAL_FREQ / 1000;
+    // Calculate start and end indices in WORDS array
+    const startIndex = seedIndex * count;
+    const endIndex = startIndex + count;
+    const totalWords = WORDS.length;
 
-    // Select words for the quiz
-    while (selected.size < count) {
-        // Use seeded random
-        let r = seededRandom(randomSeed) * adjustedTotalFreq;
-        randomSeed++;
+    const selected = [];
 
-        for (const w of WORDS) {
-            r -= (w.freq / 1000);
-            if (r <= 0) {
-                selected.add(w);
-                break;
-            }
-        }
+    // Add words from startIndex to endIndex (wrapping around if needed)
+    for (let i = startIndex; i < endIndex; i++) {
+        const wrappedIndex = i % totalWords;
+        selected.push(WORDS[wrappedIndex]);
     }
 
-    return Array.from(selected);
+    return selected;
 }
 
 // Get all unique English words for dropdown options
